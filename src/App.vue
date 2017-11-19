@@ -81,6 +81,19 @@
         return this.isCorrectAnswer && (this.currentQuestionIndex === this.quiz.length - 1)
       }
     },
+    created () {
+      this.$http.get('https://opentdb.com/api.php?amount=10').then(response => {
+        const data = response.body.results
+        
+        this.quiz = data.map(question => {
+          return {
+            title: question.question,
+            answers: [...question.incorrect_answers, question.correct_answer],
+            correctAnswerIndex: 3
+          }
+        })
+      })
+    },
     methods: {
       addQuestion (question) {
         this.quiz.unshift(question)
