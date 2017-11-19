@@ -45,7 +45,18 @@
       },
       closeModal () {
         this.modalVisible = false
+      },
+      handleEscape (event) {
+        if (event.key === 'Escape') {
+          this.closeModal()
+        }
       }
+    },
+    mounted () {
+      document.addEventListener('keydown', this.handleEscape)
+    },
+    destroyed () {
+      document.removeEventListener('keydown', this.handleEscape)
     }
   }
 </script>
