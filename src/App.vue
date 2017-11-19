@@ -4,9 +4,19 @@
       <v-container>
         <v-layout>
           <v-flex>
-            <v-card>
-              <h1>WarsawJS Quiz</h1>
-              <h5>Question #{{ currentQuestionIndex + 1 }}</h5>
+            <h1>warsawjs-workshop-12-quiz</h1>
+            <v-card v-if="hasQuizEnded">
+              <v-card-media src="https://media1.tenor.com/images/4f586b8d5cdc536ada9889b58e6d91e8/tenor.gif?itemid=5131908" height="300px">
+              </v-card-media>
+              <v-card-title primary-title>
+                <div class="text-xs-center">
+                  <h3 class="headline mb-">congratulations!</h3>
+                  <p>jesteś zwycięzcą</p>
+                </div>
+              </v-card-title>
+            </v-card>
+            <v-card v-else>
+              <h5>Question {{ currentQuestionIndex + 1 }} / {{ quiz.length }}</h5>
               <v-card-title> {{ currentQuestion.title }}</v-card-title>
               <v-card-text>
                 <v-list>
@@ -22,10 +32,10 @@
                 </v-list>
               </v-card-text>
               <v-card-actions>
-                <v-btn v-if="isCorrectAnswer" v-on:click="getNextQuestion">
+                <v-btn v-if="isCorrectAnswer && !hasQuizEnded" v-on:click="getNextQuestion">
                   następne pytanie
                 </v-btn>
-                <v-btn v-if="userAnswer && !isCorrectAnswer" v-on:click="restart">
+                <v-btn v-if="!isCorrectAnswer && !hasQuizEnded && userAnswer !== null" v-on:click="restart">
                   zacznij od początku
                 </v-btn>
               </v-card-actions>
@@ -53,6 +63,9 @@
       },
       isCorrectAnswer () {
         return this.quiz[this.currentQuestionIndex].correctAnswerIndex === this.userAnswer
+      },
+      hasQuizEnded () {
+        return this.isCorrectAnswer && (this.currentQuestionIndex === this.quiz.length - 1)
       }
     },
     methods: {
