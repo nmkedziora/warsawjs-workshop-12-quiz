@@ -21,6 +21,14 @@
                   </v-list-tile>
                 </v-list>
               </v-card-text>
+              <v-card-actions>
+                <v-btn v-if="isCorrectAnswer" v-on:click="getNextQuestion">
+                  następne pytanie
+                </v-btn>
+                <v-btn v-if="userAnswer && !isCorrectAnswer" v-on:click="restart">
+                  zacznij od początku
+                </v-btn>
+              </v-card-actions>
             </v-card>
           </v-flex>
         </v-layout>
@@ -42,6 +50,9 @@
     computed: {
       currentQuestion () {
         return this.quiz[this.currentQuestionIndex]
+      },
+      isCorrectAnswer () {
+        return this.quiz[this.currentQuestionIndex].correctAnswerIndex === this.userAnswer
       }
     },
     methods: {
@@ -55,6 +66,14 @@
           success: this.userAnswer === index && this.userAnswer === this.currentQuestion.correctAnswerIndex,
           error: this.userAnswer === index && this.userAnswer !== this.currentQuestion.correctAnswerIndex
         }
+      },
+      getNextQuestion () {
+        this.currentQuestionIndex++
+        this.userAnswer = null
+      },
+      restart () {
+        this.currentQuestionIndex = 0
+        this.userAnswer = null
       }
     }
   }
