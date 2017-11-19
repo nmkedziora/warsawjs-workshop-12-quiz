@@ -11,7 +11,7 @@
               <v-card-title primary-title>
                 <div class="text-xs-center">
                   <h3 class="headline mb-">congratulations!</h3>
-                  <p>jesteś zwycięzcą</p>
+                  <p>kim jesteś? jesteś zwycięzcą!</p>
                 </div>
               </v-card-title>
             </v-card>
@@ -42,7 +42,11 @@
             </v-card>
           </v-flex>
           <v-flex md4>
-            <add-question @new-question-added="addQuestion($event)"></add-question>
+            <add-question
+              @new-question-added="addQuestion($event)"
+              :numberOfQuestions="quiz.length"
+            >
+            </add-question>
           </v-flex>
         </v-layout>
       </v-container>

@@ -3,6 +3,8 @@
     <v-btn slot="activator">Utwórz nowe pytanie</v-btn>
     <v-card>
       <v-card-text>
+
+        <p>Do tej pory quiz ma {{ numberOfQuestions }} pytań.</p>
         <v-text-field v-model="question" label="Pytanie"></v-text-field>
         <v-text-field v-model="answer1" label="Odpowiedź 1"></v-text-field>
         <v-text-field v-model="answer2" label="Odpowiedź 2"></v-text-field>
@@ -24,6 +26,9 @@
         correctAnswerIndex: null,
         modalVisible: false
       }
+    },
+    props: {
+      numberOfQuestions: {type: Number}
     },
     computed: {
       normalizedQuestion () {
