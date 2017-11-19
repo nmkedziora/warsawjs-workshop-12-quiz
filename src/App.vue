@@ -2,9 +2,9 @@
   <v-app dark>
     <v-content>
       <v-container>
-        <v-layout>
-          <v-flex>
-            <h1>warsawjs-workshop-12-quiz</h1>
+        <h1>warsawjs-workshop-12-quiz</h1>
+        <v-layout row justify-center>
+          <v-flex md6 xs10>
             <v-card v-if="hasQuizEnded">
               <v-card-media src="https://media1.tenor.com/images/4f586b8d5cdc536ada9889b58e6d91e8/tenor.gif?itemid=5131908" height="300px">
               </v-card-media>
@@ -41,6 +41,9 @@
               </v-card-actions>
             </v-card>
           </v-flex>
+          <v-flex md4>
+            <add-question @new-question-added="addQuestion($event)"></add-question>
+          </v-flex>{{ newQuestion }}
         </v-layout>
       </v-container>
     </v-content>
@@ -49,12 +52,18 @@
 
 <script>
   import { quiz } from './quiz'
+  import AddQuestion from './components/AddQuestion.vue'
+
   export default {
+    components: {
+      'add-question': AddQuestion
+    },
     data () {
       return {
         quiz: quiz,
         currentQuestionIndex: 0,
-        userAnswer: null
+        userAnswer: null,
+        newQuestion: {}
       }
     },
     computed: {
@@ -69,6 +78,9 @@
       }
     },
     methods: {
+      addQuestion (question) {
+        this.quiz.unshift(question)
+      },
       saveAnswer (index) {
         if (this.userAnswer === null) {
           this.userAnswer = index
@@ -91,5 +103,3 @@
     }
   }
 </script>
-
-<style></style>

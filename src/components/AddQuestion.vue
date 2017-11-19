@@ -1,0 +1,40 @@
+<template>
+  <v-card>
+    <h5>add question component</h5>
+    <v-card-text>
+      <v-text-field v-model="question" label="Pytanie"></v-text-field>
+      <v-text-field v-model="answer1" label="Odpowiedź 1"></v-text-field>
+      <v-text-field v-model="answer2" label="Odpowiedź 2"></v-text-field>
+      <v-text-field v-model="correctAnswerIndex" label="Indeks prawidłowej odpowiedzi"></v-text-field>
+      <v-btn v-on:click="add">dodaj pytanie</v-btn>
+    </v-card-text>
+    <pre>{{ normalizedQuestion }}</pre>
+  </v-card>
+</template>
+<script>
+  export default {
+    name: 'add-question',
+    data () {
+      return {
+        question: '',
+        answer1: '',
+        answer2: '',
+        correctAnswerIndex: null
+      }
+    },
+    computed: {
+      normalizedQuestion () {
+        return {
+          title: this.question,
+          answers: [this.answer1, this.answer2],
+          correctAnswerIndex: +this.correctAnswerIndex
+        }
+      }
+    },
+    methods: {
+      add () {
+        this.$emit('new-question-added', this.normalizedQuestion)
+      }
+    }
+  }
+</script>
