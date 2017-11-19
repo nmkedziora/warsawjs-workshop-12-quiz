@@ -43,7 +43,7 @@
           </v-flex>
           <v-flex md4>
             <add-question @new-question-added="addQuestion($event)"></add-question>
-          </v-flex>{{ newQuestion }}
+          </v-flex>
         </v-layout>
       </v-container>
     </v-content>
